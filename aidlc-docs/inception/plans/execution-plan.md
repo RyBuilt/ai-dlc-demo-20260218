@@ -1,18 +1,18 @@
-# Execution Plan: Task Management API
+# Execution Plan: Task Manager Frontend
 
 ## Analysis Summary
 
 ### Scope
-- **Project Type**: Greenfield
-- **Change Type**: New REST API application
+- **Project Type**: Brownfield (adding frontend to existing API)
+- **Change Type**: New React SPA + minor backend modification (static file serving)
 - **Risk Level**: Low
 
 ### Impact Assessment
-- **User-facing changes**: Yes - New API endpoints for task CRUD
-- **Structural changes**: Yes - New project from scratch
-- **Data model changes**: Yes - New tasks table in SQLite
-- **API changes**: Yes - 5 new REST endpoints
-- **NFR impact**: No - Simple requirements, no special NFR concerns
+- **User-facing changes**: Yes - Entirely new UI
+- **Structural changes**: Yes - New `client/` directory with Vite React app
+- **Data model changes**: No - Uses existing API as-is
+- **API changes**: No - Backend API unchanged
+- **NFR impact**: Minor - Backend needs to serve static files in production
 
 ---
 
@@ -22,7 +22,7 @@
 INCEPTION (Complete)          CONSTRUCTION
 ┌───────────────────┐        ┌───────────────────┐
 │ Workspace Detection│   ┌──>│ Code Generation   │
-│ Requirements       │───┘   │ (all FRs + NFRs)  │
+│ Requirements       │───┘   │ (React frontend)  │
 │ Workflow Planning  │       └────────┬──────────┘
 └───────────────────┘                │
                                      v
@@ -39,36 +39,37 @@ INCEPTION (Complete)          CONSTRUCTION
 
 | Stage | Status | Rationale |
 |-------|--------|-----------|
-| Workspace Detection | COMPLETED | Greenfield project detected |
-| Reverse Engineering | SKIPPED | Greenfield - no existing code |
-| Requirements Analysis | COMPLETED | 5 FRs, 2 NFRs identified |
-| User Stories | SKIPPED | Single-user CRUD API, no personas needed |
+| Workspace Detection | COMPLETED | Brownfield, existing Express API |
+| Reverse Engineering | SKIPPED | API well-documented from previous workflow |
+| Requirements Analysis | COMPLETED | 5 FRs, 3 NFRs identified |
+| User Stories | SKIPPED | Single-user app, clear requirements |
 | Workflow Planning | COMPLETED | This document |
-| Application Design | SKIPPED | Simple single-component API, no service layer |
-| Units Generation | SKIPPED | Small scope - single unit of work |
+| Application Design | SKIPPED | Single SPA component, no service layer |
+| Units Generation | SKIPPED | Single unit — the React frontend |
 
 ### CONSTRUCTION PHASE
 
 | Stage | Status | Rationale |
 |-------|--------|-----------|
-| Functional Design | SKIPPED | Simple CRUD, no complex business logic |
-| NFR Requirements | SKIPPED | No special performance/security needs |
+| Functional Design | SKIPPED | Standard React CRUD patterns |
+| NFR Requirements | SKIPPED | Tailwind handles responsive, Vite handles proxy |
 | NFR Design | SKIPPED | NFR Requirements skipped |
-| Infrastructure Design | SKIPPED | Local development only, no infra mapping |
-| Code Generation | EXECUTE | Implement all FRs and NFRs |
-| Build and Test | EXECUTE | Verify the implementation works |
+| Infrastructure Design | SKIPPED | No infra changes |
+| Code Generation | EXECUTE | Build the React app |
+| Build and Test | EXECUTE | Verify everything works end-to-end |
 
 ---
 
 ## Success Criteria
 
-- **Primary Goal**: Working REST API with full CRUD operations for tasks
+- **Primary Goal**: Polished React UI that connects to the existing task API
 - **Key Deliverables**:
-  - Express.js application with 5 REST endpoints
-  - SQLite database with tasks table
-  - Consistent JSON error handling
-  - package.json with dependencies and scripts
+  - Vite + React app in `client/` directory
+  - Tailwind CSS styling with modern, polished look
+  - All 5 CRUD operations working through the UI
+  - Vite proxy for development
+  - Express static file serving for production
 - **Quality Gates**:
-  - All endpoints return correct status codes
-  - Data persists across server restarts
-  - Error responses follow consistent format
+  - All task operations (create, read, update, delete, toggle) work via UI
+  - Responsive layout on mobile and desktop
+  - Backend tests still pass (no breaking changes)

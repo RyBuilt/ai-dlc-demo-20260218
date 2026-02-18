@@ -2,10 +2,9 @@
 
 ## Project Overview
 
-**Units Implemented**: 1 (task-api — all FRs and NFRs)
-**Total Source Files**: 6
-**Total Test Files**: 1
-**Total Tests**: 15
+**Units Implemented**: 2 (backend API + React frontend)
+**Total Source Files**: 17 (6 backend + 11 frontend)
+**Total Backend Tests**: 15 (all passing)
 
 ---
 
@@ -13,9 +12,10 @@
 
 | Step | Status |
 |------|--------|
-| Dependencies | Ready (installed) |
-| Configuration | Ready (none required) |
-| Build | Ready (no build step — Node.js) |
+| Backend dependencies | Ready |
+| Frontend dependencies | Ready |
+| Frontend build (Vite) | Success (289ms) |
+| Static file serving | Configured |
 
 ---
 
@@ -23,25 +23,29 @@
 
 | Test Type | Count | Status |
 |-----------|-------|--------|
-| Integration | 15 | 15/15 Pass |
+| Backend Integration | 15 | 15/15 Pass |
+| Frontend Manual | — | Checklist provided |
 
 ---
 
 ## Quality Checks
 
-- [x] All tests pass (15/15)
-- [x] No linting errors
-- [x] No security vulnerabilities (npm audit clean)
-- [x] Documentation complete (build + test instructions)
+- [x] Frontend builds without errors
+- [x] Backend tests pass (no regressions)
+- [x] API proxy configured for development
+- [x] Static file serving configured for production
+- [x] Build/test documentation complete
 
 ---
 
 ## Deployment Readiness
 
-**Ready for Deployment**: Yes (local development)
+**Ready for Deployment**: Yes
 
-**To Run**:
+**Quick Start**:
 ```bash
-npm install
+npm run install:all
+npm run build
 npm start
+# Open http://localhost:3000
 ```

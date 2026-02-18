@@ -4,7 +4,7 @@
 
 | Test Type | Count | Location |
 |-----------|-------|----------|
-| Integration Tests | 15 | `tests/tasks.test.js` |
+| Backend Integration Tests | 15 | `tests/tasks.test.js` |
 
 ---
 
@@ -16,56 +16,44 @@
 npm test
 ```
 
-### Specific Test File
-
-```bash
-npx jest tests/tasks.test.js --verbose
-```
-
-### Run a Single Test by Name
-
-```bash
-npx jest --testNamePattern="creates a task with title"
-```
-
 ---
 
-## Test Coverage
+## Manual UI Testing Checklist
 
-```bash
-npx jest --coverage
-```
+Start the app in dev mode (`npm run dev`) and verify:
 
----
+### Create Task (FR-2)
+- [ ] Enter title and click "Add Task" — task appears in list
+- [ ] Submit with empty title — shows "Title is required" error
+- [ ] Form clears after successful submission
+- [ ] "Adding..." loading state shows during submission
 
-## Test Data
+### View Tasks (FR-1)
+- [ ] Tasks display with title, description, and completed status
+- [ ] Empty state shows "No tasks yet" message
+- [ ] Tasks ordered by most recently created first
 
-### Setup
+### Toggle Completion (FR-3)
+- [ ] Click checkbox to mark complete — strikethrough + muted
+- [ ] Click again to mark incomplete — restores normal style
+- [ ] Completed tasks appear in separate section below
 
-Tests use in-memory SQLite databases (`:memory:`). Each test gets a fresh database via `beforeEach`, so no external setup is needed.
+### Edit Task (FR-4)
+- [ ] Hover task, click pencil icon — switches to edit mode
+- [ ] Edit title/description, click Save — updates immediately
+- [ ] Press Enter to save, Escape to cancel
+- [ ] Cancel restores original values
 
-### Cleanup
+### Delete Task (FR-5)
+- [ ] Hover task, click trash icon — confirmation dialog appears
+- [ ] Click Cancel — dialog closes, task remains
+- [ ] Click Delete — task removed from list
+- [ ] Press Escape to dismiss dialog
 
-Databases are closed in `afterEach`. No manual cleanup required.
+### Responsive (NFR-1)
+- [ ] Layout works on desktop (1920px)
+- [ ] Layout works on mobile (375px)
 
----
-
-## Test Matrix
-
-| Endpoint | Test | Expected |
-|----------|------|----------|
-| POST /api/tasks | Title + description | 201, task object |
-| POST /api/tasks | Title only | 201, empty description |
-| POST /api/tasks | Missing title | 400, error message |
-| POST /api/tasks | Empty title | 400, error message |
-| GET /api/tasks | No tasks | 200, empty array |
-| GET /api/tasks | With tasks | 200, array of tasks |
-| GET /api/tasks/:id | Valid ID | 200, task object |
-| GET /api/tasks/:id | Invalid ID | 404, error message |
-| PUT /api/tasks/:id | Update title | 200, updated task |
-| PUT /api/tasks/:id | Update completed | 200, updated task |
-| PUT /api/tasks/:id | Partial update | 200, only changed fields |
-| PUT /api/tasks/:id | Invalid ID | 404, error message |
-| PUT /api/tasks/:id | No fields | 400, error message |
-| DELETE /api/tasks/:id | Valid ID | 204, no content |
-| DELETE /api/tasks/:id | Invalid ID | 404, error message |
+### Production Build (NFR-3)
+- [ ] `npm run build` succeeds
+- [ ] `npm start` serves frontend at localhost:3000
