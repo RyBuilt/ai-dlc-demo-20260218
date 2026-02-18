@@ -33,7 +33,7 @@
 
 | Task | Branch | PR URL | PR # | PR Status |
 |------|--------|--------|------|-----------|
-| React Frontend | fr-1/react-frontend | | | Not Created |
+| React Frontend | fr-1/react-frontend | https://github.com/RyBuilt/ai-dlc-demo-20260218/pull/2 | 2 | Open |
 
 ---
 
