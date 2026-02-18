@@ -1,14 +1,14 @@
-# Requirements: Task Management API
+# Requirements: Task Manager Frontend
 
 ## Intent Analysis
 
 | Attribute | Value |
 |-----------|-------|
-| **Request** | Build a REST API for task management |
-| **Request Type** | New Project |
-| **Scope** | Single Component |
-| **Complexity** | Simple |
-| **Depth** | Minimal |
+| **Request** | Build a React frontend UI for the task manager |
+| **Request Type** | New Feature (frontend for existing API) |
+| **Scope** | New Component (React SPA alongside existing backend) |
+| **Complexity** | Simple-Moderate |
+| **Depth** | Standard |
 
 ---
 
@@ -16,117 +16,120 @@
 
 | Decision | Value |
 |----------|-------|
-| **Language** | Node.js |
-| **Framework** | Express |
-| **Database** | SQLite |
-| **Authentication** | None |
+| **Framework** | React (via Vite) |
+| **Styling** | Tailwind CSS |
+| **UI Polish** | Polished & modern |
+| **Backend** | Existing Express API at /api/tasks |
+| **Architecture** | SPA served alongside Express backend (proxy in dev) |
 
 ---
 
 ## Functional Requirements
 
-### FR-1: Create Task
+### FR-1: View Task List
 
-Create a new task via POST request.
+Display all tasks from the API in a clean, organized list.
 
-**Endpoint**: `POST /api/tasks`
-
-**Input**:
-- `title` (required, string): Task title
-- `description` (optional, string): Task description
+**API**: `GET /api/tasks`
 
 **Acceptance Criteria**:
-- Accepts JSON body with title and optional description
-- Returns 201 with the created task (including generated id, timestamps)
-- Returns 400 if title is missing or empty
+- Fetches and displays all tasks on page load
+- Shows task title, description (if present), and completed status
+- Shows "No tasks yet" message when list is empty
+- Tasks ordered by most recently created first
+- Visual distinction between completed and incomplete tasks
 
-### FR-2: List Tasks
+### FR-2: Create Task
 
-Retrieve all tasks via GET request.
+Allow user to create a new task via a form.
 
-**Endpoint**: `GET /api/tasks`
-
-**Acceptance Criteria**:
-- Returns 200 with an array of all tasks
-- Returns empty array if no tasks exist
-- Each task includes id, title, description, completed status, and timestamps
-
-### FR-3: Get Task by ID
-
-Retrieve a single task by its ID.
-
-**Endpoint**: `GET /api/tasks/:id`
+**API**: `POST /api/tasks`
 
 **Acceptance Criteria**:
-- Returns 200 with the task object if found
-- Returns 404 if task does not exist
+- Form with title (required) and description (optional) fields
+- Submit button creates the task via API
+- New task appears in the list immediately after creation
+- Form clears after successful submission
+- Shows validation error if title is empty
+- Loading state while submitting
 
-### FR-4: Update Task
+### FR-3: Toggle Task Completion
 
-Update an existing task.
+Allow user to mark a task as complete or incomplete.
 
-**Endpoint**: `PUT /api/tasks/:id`
-
-**Input**:
-- `title` (optional, string): Updated title
-- `description` (optional, string): Updated description
-- `completed` (optional, boolean): Completion status
+**API**: `PUT /api/tasks/:id`
 
 **Acceptance Criteria**:
-- Returns 200 with the updated task
-- Returns 404 if task does not exist
-- Returns 400 if no valid fields provided
-- Only updates fields that are provided
+- Checkbox or toggle to mark task complete/incomplete
+- Calls API to update completed status
+- Visual feedback (strikethrough, muted colors) for completed tasks
+- Optimistic UI update with rollback on error
+
+### FR-4: Edit Task
+
+Allow user to edit an existing task's title and description.
+
+**API**: `PUT /api/tasks/:id`
+
+**Acceptance Criteria**:
+- Edit mode activated by clicking an edit button
+- Inline editing of title and description
+- Save and cancel buttons in edit mode
+- Updates reflected immediately after save
 
 ### FR-5: Delete Task
 
-Delete a task by its ID.
+Allow user to remove a task.
 
-**Endpoint**: `DELETE /api/tasks/:id`
+**API**: `DELETE /api/tasks/:id`
 
 **Acceptance Criteria**:
-- Returns 204 on successful deletion
-- Returns 404 if task does not exist
+- Delete button on each task
+- Confirmation before deletion (to prevent accidents)
+- Task removed from list immediately after deletion
+- Error handling if deletion fails
 
 ---
 
 ## Non-Functional Requirements
 
-### NFR-1: Data Persistence
+### NFR-1: Responsive Design
 
-Tasks must be persisted to a SQLite database file so data survives server restarts.
-
-**Acceptance Criteria**:
-- Database file created automatically on first run
-- Tasks table with appropriate schema (id, title, description, completed, created_at, updated_at)
-- Auto-incrementing integer primary key
-
-### NFR-2: Error Handling
-
-API should return consistent JSON error responses.
+UI should work well on desktop and mobile screens.
 
 **Acceptance Criteria**:
-- All errors return JSON with `error` field
-- Appropriate HTTP status codes (400, 404, 500)
+- Clean layout on screens 375px to 1920px wide
+- Touch-friendly targets on mobile
+
+### NFR-2: API Proxy (Development)
+
+Vite dev server should proxy API requests to the Express backend.
+
+**Acceptance Criteria**:
+- `/api/*` requests proxied to `http://localhost:3000` in development
+- No CORS issues during development
+
+### NFR-3: Production Build Integration
+
+Frontend should be servable from the Express backend in production.
+
+**Acceptance Criteria**:
+- `npm run build` produces static files in a `client/dist` directory
+- Express backend can serve the static files
+- Single `npm start` command runs the full application
 
 ---
 
 ## Constraints
 
-- No authentication required
-- Single-user API
-- No pagination needed (basic CRUD scope)
+- Must connect to the existing Express API (no API changes)
+- React SPA (single page, no routing needed)
+- No authentication (matches backend)
 
 ---
 
 ## Assumptions
 
-- Tasks have a simple flat structure (no subtasks, no categories)
-- The API will run locally for development/demo purposes
-- SQLite is sufficient for the expected data volume
-
----
-
-## Open Questions
-
-None - all requirements clarified.
+- Backend runs on port 3000
+- Frontend dev server on port 5173 (Vite default)
+- Production: Express serves both API and static frontend files

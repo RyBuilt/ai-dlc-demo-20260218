@@ -1,11 +1,11 @@
-# AI-DLC State: task-management-api
+# AI-DLC State: task-manager-frontend
 
 ## Project Overview
 
 | Attribute | Value |
 |-----------|-------|
-| **Project** | task-management-api |
-| **Type** | Greenfield |
+| **Project** | task-manager-frontend |
+| **Type** | Brownfield (existing Express API backend) |
 | **Started** | 2026-02-17 |
 | **Current Phase** | CONSTRUCTION |
 
@@ -33,13 +33,7 @@
 
 | Task | Branch | PR URL | PR # | PR Status |
 |------|--------|--------|------|-----------|
-| FR-1: Create Task | fr-1/create-task | | | Not Created |
-| FR-2: List Tasks | fr-2/list-tasks | | | Not Created |
-| FR-3: Get Task by ID | fr-3/get-task-by-id | | | Not Created |
-| FR-4: Update Task | fr-4/update-task | | | Not Created |
-| FR-5: Delete Task | fr-5/delete-task | | | Not Created |
-| NFR-1: Data Persistence | nfr-1/data-persistence | | | Not Created |
-| NFR-2: Error Handling | nfr-2/error-handling | | | Not Created |
+| React Frontend | fr-1/react-frontend | | | Not Created |
 
 ---
 
@@ -48,19 +42,19 @@
 ### INCEPTION PHASE
 
 - [x] Workspace Detection
-- [ ] Reverse Engineering (SKIPPED - Greenfield project)
+- [ ] Reverse Engineering (SKIPPED - API well-documented)
 - [x] Requirements Analysis
-- [ ] User Stories (SKIPPED - Single-user CRUD, no personas)
+- [ ] User Stories (SKIPPED - Single-user, clear requirements)
 - [x] Workflow Planning
-- [ ] Application Design (SKIPPED - Simple single-component API)
-- [ ] Units Generation (SKIPPED - Single unit of work)
+- [ ] Application Design (SKIPPED - Single SPA)
+- [ ] Units Generation (SKIPPED - Single unit)
 
 ### CONSTRUCTION PHASE
 
-- [ ] Functional Design (SKIPPED - Simple CRUD logic)
-- [ ] NFR Requirements (SKIPPED - No special NFR needs)
-- [ ] NFR Design (SKIPPED - NFR Requirements skipped)
-- [ ] Infrastructure Design (SKIPPED - Local dev only)
+- [ ] Functional Design (SKIPPED - Standard React CRUD)
+- [ ] NFR Requirements (SKIPPED - Tailwind/Vite handle it)
+- [ ] NFR Design (SKIPPED)
+- [ ] Infrastructure Design (SKIPPED)
 - [x] Code Generation
 - [x] Build and Test
 
@@ -70,20 +64,31 @@
 
 ---
 
+## Existing Codebase
+
+| Component | Details |
+|-----------|---------|
+| **Backend** | Express.js REST API |
+| **Database** | SQLite (better-sqlite3) |
+| **Endpoints** | POST/GET/PUT/DELETE /api/tasks |
+| **Tests** | 15 integration tests (all passing) |
+| **Port** | 3000 |
+
+---
+
 ## Decisions Log
 
 | Date | Decision | Rationale |
 |------|----------|-----------|
-| 2026-02-17 | Greenfield project | Empty workspace, no existing code |
+| 2026-02-17 | Brownfield project | Existing Express API backend in place |
 | 2026-02-17 | Skip Asana integration | No Asana MCP tools available |
-| 2026-02-17 | Standard branch naming | User selected {type}-{id}/{slug} pattern |
-| 2026-02-17 | Node.js + Express | User selected tech stack |
-| 2026-02-17 | SQLite database | User selected for simplicity |
-| 2026-02-17 | No authentication | User chose open API |
-| 2026-02-17 | Basic CRUD only | User chose minimal feature set |
+| 2026-02-17 | Reuse GitHub config | Same repository from previous workflow |
+| 2026-02-17 | Vite + React | User selected modern build tool |
+| 2026-02-17 | Tailwind CSS | User selected utility-first styling |
+| 2026-02-17 | Polished & modern UI | User wants visual polish with transitions |
 
 ---
 
 ## Next Action
 
-Build and Test complete. CONSTRUCTION PHASE complete. 15/15 tests passing. Awaiting user approval.
+**WORKFLOW COMPLETE** - React frontend delivered successfully.

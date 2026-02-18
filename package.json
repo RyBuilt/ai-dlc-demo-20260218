@@ -5,7 +5,10 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "test": "jest --verbose"
+    "dev": "node src/server.js & npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "test": "jest --verbose",
+    "install:all": "npm install && npm --prefix client install"
   },
   "keywords": [],
   "license": "ISC",
